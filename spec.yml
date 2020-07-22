@@ -1,0 +1,175 @@
+info:
+  title: IOT
+  version: 1.0.0
+consumes:
+  - application/json
+produces:
+  - application/json
+swagger: '2.0'
+securityDefinitions:
+  keystone:
+    description: OpenStack Keystone Authentication
+    type: apiKey
+    in: header
+    name: x-auth-token
+
+security: []
+
+definitions:
+  User:
+    type: object
+  UserID:
+    type: object
+  UpdatedUserData:
+    type: object
+  Token:
+    type: object
+  Error:
+    type: object
+  UserAuth:
+    type: object
+
+paths:
+  /api/v1/users:
+    post:
+      operationId: CreateUser
+      tags:
+        - Registration
+      summary: Create user
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/UserID'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Forbidden
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      security:
+        - keystone: []
+
+  /api/v1/users/{user_id}:
+    patch:
+      operationId: UpdateProfile
+      tags:
+          - Registration
+      summary: Update user profile
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/UpdatedUserData'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+      parameters:
+        - name: user_id
+          in: path
+          type: integer
+          required: true
+          description: Id of a user
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      security:
+        - keystone: []
+
+  /api/v1/tokens:
+    post:
+      operationId: Login
+      tags:
+        - Registration
+      summary: User login
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/Token'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserAuth'
+      security:
+        - keystone: []
+
+  /api/v1/tokens/{token_id}:
+    delete:
+      operationId: Logout
+      tags:
+        - Registration
+      summary: User logout
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Token'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found
+      parameters:
+        - name: token_id
+          in: path
+          type: integer
+          required: true
+          description: User token
+      security:
+        - keystone: []
+
+  /api/v1/emails:
+    post:
+      operationId: SendResetPasswordEmail
+      tags:
+        - Registration
+      summary: Send to user reset password e-mail
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Forbidden
+        404:
+          description: Not Found
+      parameters:
+        - in: body
+          name: type
+          schema:
+            type: string
+            enum: [resetpassword]
+          description: e-mail type
+      security:
+        - keystone: []

@@ -50,29 +50,29 @@ class RefNode(object):
 
 base_path = '/v1'
 
-definitions = {'definitions': {'User': {'type': 'object'}, 'UserID': {'type': 'object'}, 'UpdatedUserData': {'type': 'object'}, 'Token': {'type': 'object'}, 'Error': {'type': 'object'}, 'UserAuth': {'type': 'object'}}, 'parameters': {}}
+definitions = {'definitions': {'User': {'type': 'object', 'properties': {'username': {'type': 'string'}, 'password': {'type': 'string'}}}, 'UserID': {'type': 'object'}, 'UpdatedUserData': {'type': 'object'}, 'Token': {'type': 'object', 'properties': {'id': {'type': 'string'}, 'token': {'type': 'string'}, 'expires_at': {'type': 'string'}, 'login': {'type': 'string'}, 'first_name': {'type': 'string'}, 'last_name': {'type': 'string'}}}, 'Error': {'type': 'object', 'properties': {'error': {'type': 'string'}}}, 'UserAuth': {'type': 'object'}}, 'parameters': {}}
 
 validators = {
-    ('api_v1_users', 'POST'): {'json': {'$ref': '#/definitions/User'}},
-    ('api_v1_users_user_id', 'PATCH'): {'json': {'$ref': '#/definitions/User'}},
-    ('api_v1_tokens', 'POST'): {'json': {'$ref': '#/definitions/UserAuth'}},
-    ('api_v1_emails', 'POST'): {'json': {'type': 'string', 'enum': ['resetpassword']}},
+    ('v1_users', 'POST'): {'json': {'$ref': '#/definitions/User'}},
+    ('v1_users_user_id', 'PATCH'): {'json': {'$ref': '#/definitions/User'}},
+    ('v1_tokens', 'POST'): {'json': {'$ref': '#/definitions/UserAuth'}},
+    ('v1_emails', 'POST'): {'json': {'type': 'string', 'enum': ['resetpassword']}},
 }
 
 filters = {
-    ('api_v1_users', 'POST'): {200: {'headers': None, 'schema': {'type': 'array', 'items': {'$ref': '#/definitions/User'}}}, 201: {'headers': None, 'schema': {'$ref': '#/definitions/UserID'}}, 400: {'headers': None, 'schema': {'$ref': '#/definitions/Error'}}, 403: {'headers': None, 'schema': None}},
-    ('api_v1_users_user_id', 'PATCH'): {200: {'headers': None, 'schema': {'$ref': '#/definitions/UpdatedUserData'}}, 400: {'headers': None, 'schema': {'$ref': '#/definitions/Error'}}, 403: {'headers': None, 'schema': None}, 404: {'headers': None, 'schema': None}},
-    ('api_v1_tokens', 'POST'): {201: {'headers': None, 'schema': {'$ref': '#/definitions/Token'}}, 400: {'headers': None, 'schema': {'$ref': '#/definitions/Error'}}, 404: {'headers': None, 'schema': None}},
-    ('api_v1_tokens_token_id', 'DELETE'): {200: {'headers': None, 'schema': {'$ref': '#/definitions/Token'}}, 400: {'headers': None, 'schema': {'$ref': '#/definitions/Error'}}, 404: {'headers': None, 'schema': None}},
-    ('api_v1_emails', 'POST'): {201: {'headers': None, 'schema': None}, 400: {'headers': None, 'schema': {'$ref': '#/definitions/Error'}}, 403: {'headers': None, 'schema': None}, 404: {'headers': None, 'schema': None}},
+    ('v1_users', 'POST'): {200: {'headers': None, 'schema': {'type': 'array', 'items': {'$ref': '#/definitions/User'}}}, 201: {'headers': None, 'schema': {'$ref': '#/definitions/UserID'}}, 400: {'headers': None, 'schema': {'$ref': '#/definitions/Error'}}, 403: {'headers': None, 'schema': None}},
+    ('v1_users_user_id', 'PATCH'): {200: {'headers': None, 'schema': {'$ref': '#/definitions/UpdatedUserData'}}, 400: {'headers': None, 'schema': {'$ref': '#/definitions/Error'}}, 403: {'headers': None, 'schema': None}, 404: {'headers': None, 'schema': None}},
+    ('v1_tokens', 'POST'): {201: {'headers': None, 'schema': {'$ref': '#/definitions/Token'}}, 400: {'headers': None, 'schema': {'$ref': '#/definitions/Error'}}, 404: {'headers': None, 'schema': None}},
+    ('v1_tokens_token_id', 'DELETE'): {200: {'headers': None, 'schema': {'$ref': '#/definitions/Token'}}, 400: {'headers': None, 'schema': {'$ref': '#/definitions/Error'}}, 404: {'headers': None, 'schema': None}},
+    ('v1_emails', 'POST'): {201: {'headers': None, 'schema': None}, 400: {'headers': None, 'schema': {'$ref': '#/definitions/Error'}}, 403: {'headers': None, 'schema': None}, 404: {'headers': None, 'schema': None}},
 }
 
 scopes = {
-    ('api_v1_users', 'POST'): [],
-    ('api_v1_users_user_id', 'PATCH'): [],
-    ('api_v1_tokens', 'POST'): [],
-    ('api_v1_tokens_token_id', 'DELETE'): [],
-    ('api_v1_emails', 'POST'): [],
+    ('v1_users', 'POST'): [],
+    ('v1_users_user_id', 'PATCH'): [],
+    ('v1_tokens', 'POST'): [],
+    ('v1_tokens_token_id', 'DELETE'): [],
+    ('v1_emails', 'POST'): [],
 }
 
 resolver = RefResolver.from_schema(definitions)

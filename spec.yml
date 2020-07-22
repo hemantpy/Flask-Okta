@@ -18,19 +18,40 @@ security: []
 definitions:
   User:
     type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
   UserID:
     type: object
   UpdatedUserData:
     type: object
   Token:
     type: object
+    properties:
+      id:
+        type: string
+      token:
+        type: string
+      expires_at:
+        type: string
+      login:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
   Error:
     type: object
+    properties:
+      error:
+        type: string
   UserAuth:
     type: object
 
 paths:
-  /api/v1/users:
+  /v1/users:
     post:
       operationId: CreateUser
       tags:
@@ -62,7 +83,7 @@ paths:
       security:
         - keystone: []
 
-  /api/v1/users/{user_id}:
+  /v1/users/{user_id}:
     patch:
       operationId: UpdateProfile
       tags:
@@ -95,7 +116,7 @@ paths:
       security:
         - keystone: []
 
-  /api/v1/tokens:
+  /v1/tokens:
     post:
       operationId: Login
       tags:
@@ -121,7 +142,7 @@ paths:
       security:
         - keystone: []
 
-  /api/v1/tokens/{token_id}:
+  /v1/tokens/{token_id}:
     delete:
       operationId: Logout
       tags:
@@ -147,7 +168,7 @@ paths:
       security:
         - keystone: []
 
-  /api/v1/emails:
+  /v1/emails:
     post:
       operationId: SendResetPasswordEmail
       tags:

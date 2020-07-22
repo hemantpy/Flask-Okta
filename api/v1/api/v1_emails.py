@@ -4,12 +4,13 @@ from __future__ import absolute_import, print_function
 from flask import request, g
 
 from . import Resource
-from .. import schemas
+from api.auth import oidc
 
 
-class ApiV1Users(Resource):
+class V1Emails(Resource):
 
+    @oidc.accept_token(require_token=True)
     def post(self):
         print(g.json)
 
-        return [], 200, None
+        return None, 201, None

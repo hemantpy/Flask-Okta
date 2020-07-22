@@ -8,17 +8,17 @@
 ###
 from __future__ import absolute_import
 
-from .api.api_v1_users import ApiV1Users
-from .api.api_v1_users_user_id import ApiV1UsersUserId
-from .api.api_v1_tokens import ApiV1Tokens
-from .api.api_v1_tokens_token_id import ApiV1TokensTokenId
-from .api.api_v1_emails import ApiV1Emails
+from .api.v1_users import V1Users
+from .api.v1_users_user_id import V1UsersUserId
+from .api.v1_tokens import V1Tokens
+from .api.v1_tokens_token_id import V1TokensTokenId
+from .api.v1_emails import V1Emails
 
 
 routes = [
-    dict(resource=ApiV1Users, urls=['/api/v1/users'], endpoint='api_v1_users'),
-    dict(resource=ApiV1UsersUserId, urls=['/api/v1/users/<int:user_id>'], endpoint='api_v1_users_user_id'),
-    dict(resource=ApiV1Tokens, urls=['/api/v1/tokens'], endpoint='api_v1_tokens'),
-    dict(resource=ApiV1TokensTokenId, urls=['/api/v1/tokens/<int:token_id>'], endpoint='api_v1_tokens_token_id'),
-    dict(resource=ApiV1Emails, urls=['/api/v1/emails'], endpoint='api_v1_emails'),
+    dict(resource=V1Users, urls=['/v1/users'], endpoint='v1_users'),
+    dict(resource=V1UsersUserId, urls=['/v1/users/<int:user_id>'], endpoint='v1_users_user_id'),
+    dict(resource=V1Tokens, urls=['/v1/tokens'], endpoint='v1_tokens'),
+    dict(resource=V1TokensTokenId, urls=['/v1/tokens/<int:token_id>'], endpoint='v1_tokens_token_id'),
+    dict(resource=V1Emails, urls=['/v1/emails'], endpoint='v1_emails'),
 ]

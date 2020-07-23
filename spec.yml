@@ -23,6 +23,21 @@ definitions:
         type: string
       password:
         type: string
+  User:
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+      login:
+        type: string
+      mobile_phone:
+        type: string
+      password:
+        type: string
   UserID:
     type: object
   UpdatedUserData:
@@ -47,8 +62,6 @@ definitions:
     properties:
       error:
         type: string
-  User:
-    type: object
 
 paths:
   /v1/users:
@@ -58,22 +71,20 @@ paths:
         - Registration
       summary: Create user
       responses:
-        200:
-          description: successful operation
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/User'
         201:
           description: Created
           schema:
-            $ref: '#/definitions/UserID'
+            $ref: '#/definitions/User'
         400:
           description: Bad request
           schema:
             $ref: '#/definitions/Error'
         403:
           description: Forbidden
+        500:
+          description: Problems on the server
+          schema:
+            $ref: '#/definitions/Error'
       parameters:
         - name: body
           in: body

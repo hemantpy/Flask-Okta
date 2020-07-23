@@ -36,3 +36,7 @@ class V1Tokens(Resource):
             }
 
             return response_payload, 201, None
+
+        return {
+            "error": "There are problems on the server. Please try again later"
+        }, 500

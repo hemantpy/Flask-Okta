@@ -42,6 +42,17 @@ definitions:
     type: object
   UpdatedUserData:
     type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+      login:
+        type: string
+      mobile_phone:
+        type: string
   Token:
     type: object
     properties:
@@ -109,14 +120,20 @@ paths:
           description: Bad request
           schema:
             $ref: '#/definitions/Error'
+        401:
+          description: Unauthorised user
+          schema:
+            $ref: '#/definitions/Error'
         403:
           description: Forbidden
-        404:
-          description: Not Found
+        500:
+          description: Problems on the server
+          schema:
+            $ref: '#/definitions/Error'
       parameters:
         - name: user_id
           in: path
-          type: integer
+          type: string
           required: true
           description: Id of a user
         - name: body

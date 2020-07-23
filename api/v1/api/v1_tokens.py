@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, print_function
 
-from flask import current_app, request
+from flask import current_app, g
 
 from . import Resource
 from api.auth import get_okta_client
@@ -13,8 +13,8 @@ class V1Tokens(Resource):
         okta_client = get_okta_client(current_app, service="auth")
 
         try:
-            username = request.json["username"]
-            password = request.json["password"]
+            username = g.json["username"]
+            password = g.json["password"]
         except KeyError:
             return {"error": "Payload doesn't have a correct structure"}, 400
 

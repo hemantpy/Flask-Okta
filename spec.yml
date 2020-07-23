@@ -16,7 +16,7 @@ securityDefinitions:
 security: []
 
 definitions:
-  User:
+  UserAuth:
     type: object
     properties:
       username:
@@ -47,7 +47,7 @@ definitions:
     properties:
       error:
         type: string
-  UserAuth:
+  User:
     type: object
 
 paths:
@@ -187,10 +187,15 @@ paths:
           description: Not Found
       parameters:
         - in: body
-          name: type
+          name: body
           schema:
-            type: string
-            enum: [resetpassword]
-          description: e-mail type
+            type: object
+            description: e-mail type
+            properties:
+              type:
+                type: string
+                enum: [resetpassword]
+              email:
+                type: string
       security:
         - keystone: []

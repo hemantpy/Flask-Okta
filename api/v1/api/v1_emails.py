@@ -1,16 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, print_function
 
-from flask import request, g
+from flask import request, current_app
+from okta.framework.OktaError import OktaError
 
 from . import Resource
-from api.auth import oidc
+from api.auth import get_okta_client, forgot_password
 
 
 class V1Emails(Resource):
 
-    @oidc.accept_token(require_token=True)
     def post(self):
-        print(g.json)
+        okta_client = get_okta_client(current_app, service="auth")
 
-        return None, 201, None
+        try:
+            forgot_password(
+                auth_client=okta_client,
+                username=request.json["username"],
+                factor_type="EMAIL",
+            )
+            return None, 201, None
+        except OktaError:
+            return {"error": "Your username isn't correct."}, 400, None

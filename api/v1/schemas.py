@@ -50,13 +50,13 @@ class RefNode(object):
 
 base_path = '/v1'
 
-definitions = {'definitions': {'User': {'type': 'object', 'properties': {'username': {'type': 'string'}, 'password': {'type': 'string'}}}, 'UserID': {'type': 'object'}, 'UpdatedUserData': {'type': 'object'}, 'Token': {'type': 'object', 'properties': {'id': {'type': 'string'}, 'token': {'type': 'string'}, 'expires_at': {'type': 'string'}, 'login': {'type': 'string'}, 'first_name': {'type': 'string'}, 'last_name': {'type': 'string'}}}, 'Error': {'type': 'object', 'properties': {'error': {'type': 'string'}}}, 'UserAuth': {'type': 'object'}}, 'parameters': {}}
+definitions = {'definitions': {'UserAuth': {'type': 'object', 'properties': {'username': {'type': 'string'}, 'password': {'type': 'string'}}}, 'UserID': {'type': 'object'}, 'UpdatedUserData': {'type': 'object'}, 'Token': {'type': 'object', 'properties': {'id': {'type': 'string'}, 'token': {'type': 'string'}, 'expires_at': {'type': 'string'}, 'login': {'type': 'string'}, 'first_name': {'type': 'string'}, 'last_name': {'type': 'string'}}}, 'Error': {'type': 'object', 'properties': {'error': {'type': 'string'}}}, 'User': {'type': 'object'}}, 'parameters': {}}
 
 validators = {
     ('v1_users', 'POST'): {'json': {'$ref': '#/definitions/User'}},
     ('v1_users_user_id', 'PATCH'): {'json': {'$ref': '#/definitions/User'}},
     ('v1_tokens', 'POST'): {'json': {'$ref': '#/definitions/UserAuth'}},
-    ('v1_emails', 'POST'): {'json': {'type': 'string', 'enum': ['resetpassword']}},
+    ('v1_emails', 'POST'): {'json': {'type': 'object', 'description': 'e-mail type', 'properties': {'type': {'type': 'string', 'enum': ['resetpassword']}, 'email': {'type': 'string'}}}},
 }
 
 filters = {

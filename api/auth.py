@@ -1,5 +1,8 @@
 import okta
 from flask_oidc import OpenIDConnect
+from okta.framework.ApiClient import ApiClient
+from okta.framework.Utils import Utils
+from okta.models.auth.AuthResult import AuthResult
 
 oidc = OpenIDConnect()
 
@@ -30,3 +33,15 @@ def get_okta_client(app, service, *args, **kwargs):
     )
 
     return okta_client
+
+
+def forgot_password(auth_client, username, factor_type):
+    """Patched function to forgot password flow from okta.AuthClient
+    """
+    request = {
+        'username': username,
+        'factorType': factor_type
+    }
+
+    response = ApiClient.post_path(auth_client, '/recovery/password', request)
+    return Utils.deserialize(response.text, AuthResult)
